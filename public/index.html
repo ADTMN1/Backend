@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <title>Task Manager</title>
     <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
   <body>
     <div class="app">
@@ -38,9 +42,14 @@
           li.innerHTML = `
           <span>${task.title}</span>
           <div class="actions">
-            <button onclick="completeTask('${task._id}')">✅</button>
-            <button onclick="deleteTask('${task._id}')">🗑️</button>
-          </div>
+  <button onclick="completeTask('${task._id}')">
+    <i class="fa-solid fa-square-check"></i>
+  </button>
+  <button onclick="deleteTask('${task._id}')">
+    <i class="fa-solid fa-trash"></i>
+  </button>
+</div>
+
         `;
           list.appendChild(li);
         });

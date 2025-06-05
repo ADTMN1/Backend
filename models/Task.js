@@ -4,8 +4,9 @@ const TaskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Title is required"],
       trim: true,
+      minlength: [1, "Title must not be empty"],
     },
     completed: {
       type: Boolean,

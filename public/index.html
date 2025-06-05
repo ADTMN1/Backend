@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <h1>Task Manager</h1>
+
+      <form id="task-form">
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Enter a new task"
+          required
+        />
+        <button type="submit">Add Task</button>
+      </form>
+
+      <ul id="task-list"></ul>
+    </div>
+
+    <script>
+      const apiURL = "/api/tasks";
+
+      async function fetchTasks() {
+        const res = await fetch(apiURL);
+        const tasks = await res.json();
+
+        const list = document.getElementById("task-list");
+        list.innerHTML = "";
+
+        tasks.forEach((task) => {
+          const li = document.createElement("li");
+          li.className = task.completed ? "completed" : "";
+          li.innerHTML = `
+          <span>${task.title}</span>
+          <div class="actions">
+            <button onclick="completeTask('${task._id}')">✅</button>
+            <button onclick="deleteTask('${task._id}')">🗑️</button>
+          </div>
+        `;
+          list.appendChild(li);
+        });
+      }
+
+      async function addTask(e) {
+        e.preventDefault();
+        const input = document.getElementById("task-input");
+        const title = input.value.trim();
+        if (!title) return;
+
+        await fetch(apiURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title }),
+        });
+
+        input.value = "";
+        fetchTasks();
+      }
+
+      async function completeTask(id) {
+        await fetch(`${apiURL}/${id}`, {
+          method: "PUT",
+        });
+        fetchTasks();
+      }
+
+      async function deleteTask(id) {
+        await fetch(`${apiURL}/${id}`, {
+          method: "DELETE",
+        });
+        fetchTasks();
+      }
+
+      document.getElementById("task-form").addEventListener("submit", addTask);
+      fetchTasks();
+    </script>
+  </body>
+</html>

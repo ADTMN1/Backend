@@ -37,8 +37,11 @@ API Endpoints
 | DELETE | `/api/tasks/:id`              | Delete a task            |
 
 ---
-the Frontend overveiw
+The Frontend overveiw:
+
 <img width="394" alt="image" src="https://github.com/user-attachments/assets/0aa35a3c-75a0-4572-8672-aefb9a63ad82" />
+
+
 
 Setup Instructions
 
